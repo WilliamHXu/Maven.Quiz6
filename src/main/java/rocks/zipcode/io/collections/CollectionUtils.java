@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toCollection;
-
 public class CollectionUtils {
 
     /**
@@ -43,7 +41,6 @@ public class CollectionUtils {
      * @return a single collection containing the aggregate contents of each collection passed in as an argument
      */
     public static Collection<?> flatten(Collection<?>... collections) {
-        Stream<?> stream = Stream.of(collections).flatMap(Collection::stream);
-        return stream.collect(toCollection(ArrayList::new));
+        return Stream.of(collections).flatMap(Collection::stream).collect(Collectors.toList());
     }
 }
