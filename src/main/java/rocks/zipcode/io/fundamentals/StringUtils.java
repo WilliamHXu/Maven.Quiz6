@@ -14,29 +14,12 @@ public class StringUtils {
      * @return collection containing all permutations of casing of this string
      */
     public static Collection<String> getAllCasings(String string) {
-        String lowercase = string.toLowerCase();
-        // get length of string
-        // get range of length
-        Integer[] range = ArrayUtils.getRange(0, (string.length() - 1));
-        // get power-set of range
-        PowerSet<Integer> powerSet = new PowerSet<>(range);
-        Set<Set<Integer>> setSet = powerSet.permute();
-        // for every set in power-set
+        Set<Set<Integer>> setSet = new PowerSet<>(ArrayUtils.getRange(0, (string.length() - 1))).permute();
         Collection<String> imSilly = new HashSet<>();
         for (Set<Integer> set: setSet) {
-            String toAdd = "";
-            for(Integer integer : range) {
-                if (set.contains(integer)) {
-                    toAdd += lowercase.substring(integer, integer + 1).toUpperCase();
-                }
-                else {
-                    toAdd += lowercase.substring(integer, integer + 1);
-                }
-            }
-            imSilly.add(toAdd);
+            imSilly.add(upperCaseIndices(string, set.toArray(new Integer[0])));
         }
         return imSilly;
-            // uppercase indices of string using set
 
 
 //
