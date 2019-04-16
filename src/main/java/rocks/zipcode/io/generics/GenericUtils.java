@@ -9,6 +9,6 @@ public class GenericUtils {
      * @return array with contents identical to `collection`
      */
     public static <T> T[] toArray(Collection<T> collection) {
-        return null;
+        return (T[]) collection.toArray();
     }
 }

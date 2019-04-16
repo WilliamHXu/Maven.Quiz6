@@ -1,7 +1,9 @@
 package rocks.zipcode.io.fundamentals;
 
+import rocks.zipcode.io.arrays.ArrayUtils;
+import rocks.zipcode.io.collections.PowerSet;
 
-import java.util.Collection;
+import java.util.*;
 
 /**
  * @author leon on 10/01/2019.
@@ -12,13 +14,46 @@ public class StringUtils {
      * @return collection containing all permutations of casing of this string
      */
     public static Collection<String> getAllCasings(String string) {
+        String lowercase = string.toLowerCase();
         // get length of string
         // get range of length
+        Integer[] range = ArrayUtils.getRange(0, (string.length() - 1));
         // get power-set of range
-
+        PowerSet<Integer> powerSet = new PowerSet<>(range);
+        Set<Set<Integer>> setSet = powerSet.permute();
         // for every set in power-set
+        Collection<String> imSilly = new HashSet<>();
+        for (Set<Integer> set: setSet) {
+            String toAdd = "";
+            for(Integer integer : range) {
+                if (set.contains(integer)) {
+                    toAdd += lowercase.substring(integer, integer + 1).toUpperCase();
+                }
+                else {
+                    toAdd += lowercase.substring(integer, integer + 1);
+                }
+            }
+            imSilly.add(toAdd);
+        }
+        return imSilly;
             // uppercase indices of string using set
-        return null;
+
+
+//
+//        int range = 1;
+//        for (int i = 0; i < string.length(); i++) {
+//            range *= 2;
+//        }
+//        Collection<String> madness = new ArrayList<>();
+//        for (int i = 0; i < range; i++) {
+//            String chaos = "";
+//            for (int j = 0; j < string.length(); j++) {
+//                if (i % ((j+1) * 2) == 1) {
+//                    chaos += string.substring()
+//                }
+//            }
+//        }
+//        return null;
     }
 
     /**
@@ -27,7 +62,24 @@ public class StringUtils {
      * @return near-identical string whose characters at specified indices are capitalized
      */
     public static String upperCaseIndices(String string, Integer... indices) {
-        return null;
+        String[] split = string.split("");
+        String result = "";
+        for (int i = 0; i < split.length; i++) {
+            if (contains(indices, i)) {
+                result += split[i].toUpperCase();
+            }
+            else {
+                result += split[i];
+            }
+        }
+        return result;
+    }
+
+    private static boolean contains(Integer[] array, int i) {
+        for (int j = 0; j < array.length; j++) {
+            if (array[j].equals(i)) return true;
+        }
+        return false;
     }
 
     /**
@@ -37,7 +89,7 @@ public class StringUtils {
      * @return near-identical string with `valueToBeInserted` inserted at `index`
      */
     public static String insertAtIndex(String stringToBeManipulated, String valueToBeInserted, Integer index) {
-        return null;
+        return stringToBeManipulated.substring(0, index) + valueToBeInserted + stringToBeManipulated.substring(index);
     }
 
     /**
@@ -47,6 +99,6 @@ public class StringUtils {
      * @return near-identical string with character at `index` replaced with `replacementValue`
      */
     public static String replaceAtIndex(String stringToBeManipulated, Character replacementValue, Integer index) {
-        return null;
+        return stringToBeManipulated.substring(0, index) + replacementValue + stringToBeManipulated.substring(index + 1);
     }
 }
